@@ -1,0 +1,21 @@
+### Read Metadata
+GET {{$dotenv s4hana}}/sap/opu/odata/sap/API_PRODUCT_SRV/$metadata
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+
+### Read Entities
+GET {{$dotenv s4hana}}/sap/opu/odata/sap/API_PRODUCT_SRV/
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+Accept: application/json
+
+### Read Entities
+GET {{$dotenv s4hana}}/sap/opu/odata/sap/API_PRODUCT_SRV/A_Product/$count?$filter=ProductType eq 'HAWA' and ProductGroup eq 'L001'
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+
+
+### Read Entities
+GET {{$dotenv s4hana}}/sap/opu/odata/sap/API_PRODUCT_SRV/A_Product?$filter=ProductType eq 'HAWA' and ProductGroup eq 'L001'
+&$expand=to_Description,to_Valuation
+&$top=2
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+Accept: application/json
+

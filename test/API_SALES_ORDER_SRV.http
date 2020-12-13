@@ -1,0 +1,54 @@
+### Read Metadata
+GET {{$dotenv s4hana}}/sap/opu/odata/sap/API_SALES_ORDER_SRV/$metadata
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+
+### Read Entities
+GET {{$dotenv s4hana}}/sap/opu/odata/sap/API_SALES_ORDER_SRV/
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+Accept: application/json
+
+### Read Entities
+GET {{$dotenv s4hana}}/sap/opu/odata/sap/API_SALES_ORDER_SRV/A_SalesOrder/$count
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+
+
+### Read Entities
+GET {{$dotenv s4hana}}/sap/opu/odata/sap/API_SALES_ORDER_SRV/A_SalesOrder?$orderby=CreationDate desc
+&$expand=to_Item,to_Partner
+&$top=2
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+Accept: application/json
+
+### Read Entities
+# @name fetchCSRF
+HEAD {{$dotenv s4hana}}/sap/opu/odata/sap/API_SALES_ORDER_SRV/
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+X-CSRF-Token: fetch
+
+### Map response
+@csrfToken = {{fetchCSRF.response.headers.x-csrf-token}}
+
+### Create Salesorder
+POST {{$dotenv s4hana}}/sap/opu/odata/sap/API_SALES_ORDER_SRV/A_SalesOrder
+Authorization: Basic {{$dotenv username}}:{{$dotenv password}}
+X-CSRF-Token: {{csrfToken}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "SalesOrderType": "ZCM",
+    "SalesOrganization": "1710",
+    "DistributionChannel": "10",
+    "OrganizationDivision": "00",
+    "SoldToParty": "USCU_S12",
+    "to_Item": {
+         "results": [
+            {
+             "SalesOrderItem": "10",
+             "Material": "MZ-FG-M550",
+             "RequestedQuantity": "1",
+             "RequestedQuantityUnit": "PC"
+             }
+         ]
+    }
+}
